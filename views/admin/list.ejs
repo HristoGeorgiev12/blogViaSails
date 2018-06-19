@@ -1,0 +1,29 @@
+    <h1 class="display-4">Admin Panel</h1>
+    <table class="table">
+        <tr>
+            <th>Post Title</th>
+            <th>Post Author</th>
+            <th>Post Created</th>
+            <th>Post Body</th>
+        </tr>
+        <% posts.forEach(function(post) { %>
+            <tr>
+                <td><%= post.title %></td>
+                <td><%= post.author %></td>
+                <td><%= new Date(post.createdAt).toLocaleDateString() %></td>
+                <td><%= post.body %></td>
+                <td>
+                    <form action="<%= post.body %>" method="post">
+                        <input type="hidden" name="">
+                        <input type="submit" value="Edit" class="btn btn-info">
+                    </form>
+                </td>
+                <td>
+                    <form action="<%= post.body %>" method="post">
+                        <input type="hidden" name="">
+                        <input type="submit" value="Delete" class="btn btn-danger">
+                    </form>
+                </td>
+        <%}) %>
+    </table>
+  
