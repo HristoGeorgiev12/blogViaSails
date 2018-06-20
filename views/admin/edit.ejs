@@ -1,0 +1,13 @@
+<h1 class="display-4"> Edit Post</h1>
+<form action="update" method="post">
+    <input type="hidden" name="hidden_val" id="hidden_val" value="<%= post.id %>">
+    <label for=" labelFor">Post Title</label>
+    <input type="text" name="title" id=" title" class="form-control" value="<%= post.title %>">
+    
+    <label for=" labelFor">Post Author</label>
+    <input type="text" name="author" id=" author" class="form-control" value="<%= post.author %>">
+    
+    <label for=" labelFor">Post Content</label>
+    <textarea  name="body" id=" body" class="form-control"><%= post.body %></textarea>
+    <input type="submit" class="btn btn-success btn-sm" value="Edit Post" />
+</form>

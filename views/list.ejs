@@ -23,7 +23,7 @@
 
         <!-- Date/Time -->
         <!-- <p>Posted on January 1, 2018 at 12:00 PM</p> -->
-        <p><%= post.createdAt %></p>
+        <p><%= new Date(post.createdAt).toLocaleDateString() %></p>
 
         <hr>
 

@@ -6,6 +6,52 @@
  */
 
 module.exports = {
+
+    login:function(req, res){
+        res.view('admin/login');
+    },
+
+    // login: function(req, res) {
+
+    //     // Authentication code here
+    
+    //     // If successfully authenticated
+    
+    //     req.session.userId = foundUser.id;   // returned from a database
+    
+    //     return res.json(foundUser);
+
+    // },
+
+    loginVarify:function(req, res){
+        var username = req.body.username;
+        var password = req.body.password;
+
+        // passport.authenticate('local', function(err, user, info) {
+        //     if( (err)||(!user) ) {
+        //         return res.send({
+        //             message: 'login failed'
+        //         });
+        //         res.send(err);
+        //     };
+
+
+      Admin.findOne({username: username,password: password }).exec(function(err, varify){
+        if(err) res.send(500, {error: 'Database Error'});
+
+        if(!empty(varify)) {
+            req.session.userId = varify.id
+        }
+
+      });
+        res.view('admin/login');
+    },
+
+    logout: function(req, res) {
+        req.logOut();
+        res.send('logout successful');
+    },
+
   list:function(req, res){
      Posts.find({}).exec(function(err, posts){
          if(err){
@@ -16,7 +62,7 @@ module.exports = {
   },
 
     add:function(req, res){
-        res.view('admin/add');
+        res.view('add');
     },
 
     create:function(req, res){
@@ -32,38 +78,39 @@ module.exports = {
      },
 
   delete: function(req, res){
-  Articles.destroy({id:req.params.id}).exec(function(err){
-     if(err){
-         res.send(500, {error: 'Database Error'});
-     }
-  
-     res.redirect('/articles/list');
-  });
-  return false;
+    Posts.destroy({id:req.body.hidden_val}).exec(function(err){
+        if(err){
+            res.send(500, {error: 'Database Error'});
+        }
+    
+        res.redirect('list');
+    });
+    return false;
   },
 
   update: function(req, res){
      var title = req.body.title;
      var body = req.body.body;
+     var author = req.body.author;
   
-     Articles.update({id: req.params.id},{title:title, body:body}).exec(function(err){
+     Posts.update({id: req.body.hidden_val},{title:title, body:body, author: author}).exec(function(err){
          if(err){
              res.send(500, {error: 'Database Error'});
          }
   
-         res.redirect('/articles/list');
+         res.redirect('list');
      });
   
      return false;
   },
 
   edit: function(req, res){
-      Articles.findOne({id:req.params.id}).exec(function(err, article){
+      Posts.findOne({id:req.body.hidden_val}).exec(function(err, post){
           if(err){
               res.send(500, {error: 'Database Error'});
           }
   
-          res.view('edit', {article:article});
+          res.view('admin/edit', {post:post});
       });
    },
 
