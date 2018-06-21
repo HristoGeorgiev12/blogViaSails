@@ -17,6 +17,12 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  // '*': "login",
+  Admin: {
+    'login': true,
+    'loginVarify': true,
+    '': true,
+    '*'    : 'login'
+  }
 
 };

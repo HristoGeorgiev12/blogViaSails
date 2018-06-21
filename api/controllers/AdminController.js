@@ -39,17 +39,28 @@ module.exports = {
       Admin.findOne({username: username,password: password }).exec(function(err, varify){
         if(err) res.send(500, {error: 'Database Error'});
 
-        if(!empty(varify)) {
-            req.session.userId = varify.id
-        }
+        // if(varify) {
+            // var username = req.body.username;
+            // var password = req.body.password;
+            // Admin.create({username:username,  password:password}).exec(function(err){
+            //     if(err) res.send(500, {error: 'Database Error'});
+            //     req.session.userId = varify.id
+            //     res.redirect('admin/list');
+            //     // return false;
+            //     });
+
+                req.session.userId = varify.id
+                res.redirect('list');
+        // }
 
       });
-        res.view('admin/login');
+        // res.view('login');
     },
 
     logout: function(req, res) {
-        req.logOut();
-        res.send('logout successful');
+        req.session.destroy();
+        res.redirect('login');
+        // res.send('logout successful');
     },
 
   list:function(req, res){
@@ -62,7 +73,7 @@ module.exports = {
   },
 
     add:function(req, res){
-        res.view('add');
+        res.view('admin/add');
     },
 
     create:function(req, res){
